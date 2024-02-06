@@ -12,7 +12,7 @@ namespace DataAccess.Abstract
     public interface IRentalDal:IEntitiyRepository<Rental>
     {
         List<RentalDetailDto>GetRentalDetails();
-
+        
         void CarDeliver(int rentalId);
     }
 }
