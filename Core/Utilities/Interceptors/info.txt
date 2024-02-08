@@ -1,0 +1,3 @@
+﻿aop nedir?
+
+metotlarımızın başında sonunda çalışmasinı istiyorsak onları aop yöntemi ile yapabilirz

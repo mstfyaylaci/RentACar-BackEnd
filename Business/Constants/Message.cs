@@ -52,5 +52,7 @@ namespace Business.Constants
         public static string CarNotEmty="Araç şuanda boş değil";
 
         public static string CarIsDelivered = "Araç teslim edildi";
+
+        public static string IsColorNameNumber = "Renk adı sayı içeremez";
     }
 }

@@ -1,0 +1,1 @@
+﻿validation,loglama , transaction,cacheleme,authorization.. gibi işlemlerin olduğu klasöre CrossCuttingConcerns denir.
