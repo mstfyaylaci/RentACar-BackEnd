@@ -15,7 +15,7 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(c => c.ColorName).NotEmpty();
             RuleFor(c => c.ColorName).MinimumLength(2);
-            RuleFor(c => c.ColorName).Must(IsNumber).WithMessage(Message.IsColorNameNumber);
+            RuleFor(c => c.ColorName).Must(IsNumber).WithMessage(Messages.IsColorNameNumber);
         }
 
         private bool IsNumber(string arg)

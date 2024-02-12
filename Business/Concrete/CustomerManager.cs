@@ -27,34 +27,35 @@ namespace Business.Concrete
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
-            return new SuccessResult(Message.CustomerAdded);
+            return new SuccessResult(Messages.CustomerAdded);
         }
 
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
-            return new SuccessResult(Message.CustomerDeleted);
+            return new SuccessResult(Messages.CustomerDeleted);
         }
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Message.CustomerListed); 
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed); 
         }
 
         public IDataResult<Customer> GetById(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id),Message.CustomerByListed);
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id),Messages.CustomerByListed);
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
         {
-           return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(),Message.CustomerListed);
+           return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(),Messages.CustomerListed);
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
-            return new SuccessResult(Message.CustomerUpdated);
+            return new SuccessResult(Messages.CustomerUpdated);
         }
     }
 }

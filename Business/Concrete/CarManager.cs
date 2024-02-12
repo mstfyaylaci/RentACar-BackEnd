@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validaton;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Result;
@@ -25,16 +28,19 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect (typeof(CarValidator))] // aspect
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             
             _carDal.Add(car);
-            return new SuccessResult(Message.CarAdded);
+            return new SuccessResult(Messages.CarAdded);
 
 
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             //if (DateTime.Now.Hour == 23)
@@ -50,11 +56,13 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Message.CarsListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
@@ -69,12 +77,14 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
-
+        
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICar.Get")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
 
-            return new SuccessResult(Message.CarsUpdated);
+            return new SuccessResult(Messages.CarsUpdated);
         }
 
 
