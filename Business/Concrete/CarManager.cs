@@ -28,6 +28,11 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+
+
+        //--------------------------------------------Post---------------------------------------------------
+
+
         [SecuredOperation("car.add,admin")]
         [ValidationAspect (typeof(CarValidator))] // aspect
         [CacheRemoveAspect("ICarService.Get")]
@@ -39,15 +44,14 @@ namespace Business.Concrete
 
 
         }
-        [CacheAspect]
-        [PerformanceAspect(5)]
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
+
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICar.Get")]
+        public IResult Update(Car car)
         {
-            //if (DateTime.Now.Hour == 23)
-            //{
-            //    return new ErrorDataResult<List<CarDetailDto>>(Message.MainteneanceTime);
-            //}
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            _carDal.Update(car);
+
+            return new SuccessResult(Messages.CarsUpdated);
         }
 
         public IResult Delete(Car car)
@@ -56,6 +60,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+
+
+
+        //---------------------------------------------Get------------------------------------
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
@@ -78,15 +86,41 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
         
-        [ValidationAspect(typeof(CarValidator))]
-        [CacheRemoveAspect("ICar.Get")]
-        public IResult Update(Car car)
-        {
-            _carDal.Update(car);
+        
 
-            return new SuccessResult(Messages.CarsUpdated);
+        //---------------------------------------------------------CarDetail Get----------------------------------------
+
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            //if (DateTime.Now.Hour == 23)
+            //{
+            //    return new ErrorDataResult<List<CarDetailDto>>(Message.MainteneanceTime);
+            //}
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarDetailsId(int id)
+        {
+           return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetailsId(id));
 
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarByBrandIdDetails(int brandId)
+        {
+            
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarByBrandIdDetails(brandId));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarByColorIdDetails(int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarByColorIdDetails(colorId));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarByBrandAndColor(int brandId, int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarByBrandAndColor(brandId, colorId));
+        }
     }
 }

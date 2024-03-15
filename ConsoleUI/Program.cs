@@ -192,7 +192,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new InMemoryCarDal());
 
-            carManager.Add(new Car() { Id = 6, BrandId = 4, ColorId = 3, ModelYear = 2021, Dailyprice = 270, Description = "6 km yeni araç" });
+            carManager.Add(new Car() { Id = 6, BrandId = 4, ColorId = 3, ModelYear = 2021, DailyPrice = 270, Description = "6 km yeni araç" });
 
             //foreach (var car in carManager.GetAll())
             //{
@@ -207,11 +207,11 @@ namespace ConsoleUI
 
             List<Car> cars = new List<Car>
             {
-                new Car() {Id=1 ,BrandId=1,ColorId=1,ModelYear=2023,Dailyprice=200,Description="Ford "},
-                new Car() {Id=2 ,BrandId=2,ColorId=2,ModelYear=2024,Dailyprice=220,Description="Skoda araç"},
-                new Car() {Id=3 ,BrandId=1,ColorId=2,ModelYear=2024,Dailyprice=220,Description="Bmw araç1"},
-                new Car() {Id=4 ,BrandId=2,ColorId=3,ModelYear=2022,Dailyprice=250,Description="Mercedes araç2"},
-                new Car() {Id=5 ,BrandId=2,ColorId=3,ModelYear=2021,Dailyprice=270,Description="Dacia araç3"},
+                new Car() {Id=1 ,BrandId=1,ColorId=1,ModelYear=2023,DailyPrice=200,Description="Ford "},
+                new Car() {Id=2 ,BrandId=2,ColorId=2,ModelYear=2024,DailyPrice=220,Description="Skoda araç"},
+                new Car() {Id=3 ,BrandId=1,ColorId=2,ModelYear=2024,DailyPrice=220,Description="Bmw araç1"},
+                new Car() {Id=4 ,BrandId=2,ColorId=3,ModelYear=2022,DailyPrice=250,Description="Mercedes araç2"},
+                new Car() {Id=5 ,BrandId=2,ColorId=3,ModelYear=2021,DailyPrice=270,Description="Dacia araç3"},
             };
 
             //var result = cars.FindAll(c => c.Description.Contains("araç")).OrderBy(c => c.Dailyprice).ThenBy(c => c.Description);
