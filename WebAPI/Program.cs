@@ -24,7 +24,7 @@ namespace WebAPI
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())// .NetCora senin alt yapýnda IOC var ama sen Autofaci kullan
                 .ConfigureContainer<ContainerBuilder>(buider =>
                 {
-                    buider.RegisterModule(new AutofacBusinessModule());// baþka bir IOC container kullanýlmak istenirse yapýlacak hareket
+                    buider.RegisterModule(new AutofacBusinessModule());// baþka bir IOC container kullanýlmak istenirse yapýlacak deðiþiklik 
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

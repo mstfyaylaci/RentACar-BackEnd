@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Hashing
 {
+    //Hash alınan parolayı belli başlı algoritmalarla geri dönderilemeyecek şekilde anlamsız şifreye dönüştürme
     public class HashingHelper
     {
         // sana gelen bir password ün hashini oluştur , yani dışarıya passwordHash ve passwordSalt çıkacak
@@ -19,7 +20,7 @@ namespace Core.Utilities.Security.Hashing
         }
 
         // password hashini doğrulama 
-        // Gelen hash değeri ile veri tabanımızdaki hash değeri uyuarsa true dönecek
+        // Gelen hash değeri ile veri tabanımızdaki hash değeri uyarsa true dönecek
         public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))

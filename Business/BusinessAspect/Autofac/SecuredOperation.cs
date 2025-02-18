@@ -12,17 +12,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.BusinessAspect.Autofac
-{
+{   //JWT için asspect
+    //Autharization aspectleri genellkikle businnesa yazılır çünkü yetkilendirme algoritmaarı değieşbilir
     // yetki kontrolü yapılan classs
     public class SecuredOperation : MethodInterception
     {
-        private string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor;
+        private string[] _roles; //roller virgülle ayrılarak ayırt edilir
+        private IHttpContextAccessor _httpContextAccessor;// jwt ile http isteği atıldığında her bir kişi için thread oluşur
 
         public SecuredOperation(string roles)
         {
             _roles = roles.Split(',');
-            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();//windows form gibi yerlerde İnjeciton kullanılabilmesi için ServisTool yazıldı 
 
         }
 

@@ -13,7 +13,8 @@ namespace Core.Aspects.Autofac.Validaton
     public class ValidationAspect : MethodInterception
     {
         private Type _validatorType;
-        public ValidationAspect(Type validatorType)
+        public ValidationAspect(Type validatorType) // validatorType(örnek:carValidator) kullanarak ilgili metodu veya classı doğrula
+                                                    // örnek kullanım:[ValidationAspect(typof(CarValidator))]
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {

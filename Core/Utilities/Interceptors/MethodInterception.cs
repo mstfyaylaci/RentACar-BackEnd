@@ -5,8 +5,9 @@ using System.Reflection;
 
 namespace Core.Utilities.Interceptors
 {
-    // her yere try catch yazılmaması için yazılmış bir şey
-    // tüm metotlar bu kurallardan geçerse çalışacak yani çatısı konumunda
+    // her yere try catch yazılmaması için yazılmış bir yapı
+    // tüm metotlar bu kurallardan geçerse çalışacak, yani bütün metotların çatısı konumunda
+    // invocation = burada metot konumunda
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
         protected virtual void OnBefore(IInvocation invocation) { }

@@ -10,7 +10,7 @@ namespace Core.Utilities.Interceptors
     // Attribute yi classlara veya methotara ekleyebilirsin , birden fazla ekleyebilrisn , birden fazla kullanabilirsin
     public abstract class MethodInterceptionBaseAttribute : Attribute, IInterceptor
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; }// Sıralama yapmak için önce Cache sonra loglama vs
 
         public virtual void Intercept(IInvocation invocation)
         {

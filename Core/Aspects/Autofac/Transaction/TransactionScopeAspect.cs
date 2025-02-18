@@ -18,11 +18,11 @@ namespace Core.Aspects.Autofac.Transaction
                 try
                 {
                     invocation.Proceed();
-                    transactionScope.Complete();
+                    transactionScope.Complete();// yapılan işlem başarılı olrusa devam et   
                 }
                 catch (System.Exception e)
                 {
-                    transactionScope.Dispose();
+                    transactionScope.Dispose();// eğer hata alınırsa önceki başarılı ollan işlemide geri al
                     throw;
                 }
             }

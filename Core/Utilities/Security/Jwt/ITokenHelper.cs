@@ -14,5 +14,6 @@ namespace Core.Utilities.Security.Jwt
     }
 }
 
-// Cliient istek geldiği zaman bu metot çalışcak
-//İlgili kullaınıcı için bu kullanıcı için ilgili Claimleri bulacak ve içerisinde bilgileri barındıran Bir JWT üretecek 
+// Client istek attığı zaman bu metot çalışcak
+//İlgili kullanıcı için veri tabanına gidecek bu kullanıcı için ilgili Claimleri bulacak ve içerisinde
+//bilgileri barındıran Bir JWT üretecek ve onu Cliente verecelk

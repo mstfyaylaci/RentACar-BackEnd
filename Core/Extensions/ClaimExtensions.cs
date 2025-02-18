@@ -10,7 +10,7 @@ namespace Core.Extensions
 {
     public static class ClaimExtensions
     {
-        //ICollection<Claim> Eğer senin böyle bir şey çıkarsa karşına  buna extension denir yani nesneye yeni metotlar eklemek
+        //ICollection<Claim> Eğer senin böyle bir şey çıkarsa karşına ICollection'a yeni metoto eklemek buna extension denir yani nesneye yeni metotlar eklemek
         public static void AddEmail(this ICollection<Claim> claims, string email)
         {
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, email));

@@ -15,13 +15,16 @@ namespace Business.Abstract
 
         IDataResult<Rental> GetById(int id);
 
-        
+        IDataResult<List<RentalDetailDto>> GetRentalDetails();
+
+        IDataResult<RentalDetailDto> GetByCarIdRentalDetails(int carId);
+
+        IDataResult<bool> CheckIfCanACarBeRented(int carId);
+        IDataResult<bool> CheckIfAnyRentalBetweenSelectedDates(int carId,DateTime rentDate,DateTime returnDate);
+
         IResult Add(Rental rental);
         IResult Update(Rental rental);
         IResult Delete(Rental rental);
-
-        IDataResult<List<RentalDetailDto>> GetRentalDetails();
-
         IResult CarDeliver(int rentalId);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Jwt
 {
-    // Kulalnıcıya bir anahtar veirlecek ve ne zama sona ericeğini vereceğiz
+    // Kullanıcıya bir anahtar veirlecek ve ne zaman sona ericeğini vereceğiz
     public class AccessToken
     {
         public string Token { get; set; }

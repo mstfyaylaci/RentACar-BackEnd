@@ -1,4 +1,4 @@
-﻿using Core.Utilities.Ioc;
+﻿ using Core.Utilities.Ioc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using System;

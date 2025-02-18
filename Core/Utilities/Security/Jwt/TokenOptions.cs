@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Jwt
-{
+{ 
+    //Appsettings deki okunan değerleri bir nesneye atmaya yarayan class
     public class TokenOptions
     {
         public string Audience { get; set; }

@@ -15,9 +15,9 @@ namespace Core.CrossCuttingConcerns.Caching
         object Get(string key);
         void Add(string key, object value, int duration);
 
-        bool IsAdd(string key); // cache de var mı ?
+        bool IsAdd(string key); // cache de var mı ? yoksa ekle
 
         void Remove(string key);// cach den sil
-        void RemoveByPattern(string pattern); // siminde verilen pattern olanları cache den sil
+        void RemoveByPattern(string pattern); // isminde verilen pattern olanları cache den sil
     }
 }

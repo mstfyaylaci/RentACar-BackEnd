@@ -32,7 +32,7 @@ namespace Core.Utilities.Security.Jwt
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);// token ne zaman bitecek
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey); //Anahtarı oluştur
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);// hangi anahtarı kullanacak ve hangi algoritmayı kullanacak
-            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
+            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);//Jwt üretebilmek için gerekli parametreler
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
 
@@ -61,6 +61,7 @@ namespace Core.Utilities.Security.Jwt
         
         private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
         {
+            //kULLANICININ BİLGİLERİ
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.Id.ToString());
             claims.AddEmail(user.Email);

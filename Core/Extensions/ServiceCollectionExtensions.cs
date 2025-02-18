@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Extensions
 {
-    // Core katmanıda dahil olmak üzre eklencek bütün injectionları bir araya getirecek yapı
+    // Core katmanıda dahil olmak üzre sonradan eklencek bütün injectionları bir araya getirecek yapı
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDependencyResolvers(this IServiceCollection servicesCollection, ICoreModule[] modules)

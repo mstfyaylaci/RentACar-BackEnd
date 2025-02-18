@@ -1,3 +1,4 @@
 ﻿aop nedir?
 
-metotlarımızın başında sonunda çalışmasinı istiyorsak onları aop yöntemi ile yapabilirz
+metotlarımızın başında sonunda çalışmasinı istediğimiz kurallar vs varsa  onları aop yöntemi ile yapabilirz
+cacahe ,loglma ,Validasyon kuralları Transection yönetimi gibi şeykeri metotların önüne [Attrıbute] olarak konulmasına olanak sağlar

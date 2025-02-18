@@ -2,6 +2,7 @@
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -40,7 +41,29 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        
+        [HttpGet("checkifcancarberentednow")]
+        public IActionResult CheckIfCanACarBeRented(int carId)
+        {
+            var result = _rentalService.CheckIfCanACarBeRented(carId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("checkifcancarberentednow")]
+        public IActionResult CheckIfCanCarBeRentedBetweenSelectedDates(int carId,  DateTime rentDate, DateTime returnDate)
+        {
+            var result = _rentalService.CheckIfAnyRentalBetweenSelectedDates(carId,rentDate,returnDate);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
@@ -77,16 +100,6 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("cardeliver")]
-        public IActionResult CarDeliver(int id)
-        {
-            var result = _rentalService.CarDeliver(id);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+       
     }
 }

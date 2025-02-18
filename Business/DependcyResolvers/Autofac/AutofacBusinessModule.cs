@@ -16,9 +16,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.DependcyResolvers.Autofac
+    //Bağımlılık çözücüler
 {   // startup ortamını sağlayacak olan class
     // - WebApı ye bağlı kalmamak için yapıyoruz
-    // .Net e kendi alt yapını değil benim yazdığım AUtofac alt yapısını kullan dedik
+    // .Net e kendi alt yapını değil benim yazdığım AUtofac alt yapısını kullan dedik(Program.cs .UseServiceProviderFactory metodu)
     // ileride autofac yerine başka bir teknoloji kullanılmak isternirse Yeni bir DepencyResolvers/Yeniteknoloji.class oluştur
     // ve progrram.cs de ilgili yeri değiştir 
     public class AutofacBusinessModule:Module 
@@ -54,7 +55,7 @@ namespace Business.DependcyResolvers.Autofac
             builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
 
             
-
+            //[Aspectleri] dahil edebilmek için gerekli
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
