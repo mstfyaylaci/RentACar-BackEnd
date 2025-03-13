@@ -190,7 +190,7 @@ namespace Business.Concrete
                 return new SuccessResult();
             }
             
-            //Kiralama şuanda aktif  ise
+            //Kiralama şuanda aktif  ises
             else if (rental.RentDate <= DateTime.Now && rental.ReturnDate >= DateTime.Now)
             {
                 if (rental.DeliveryStatus != false)
