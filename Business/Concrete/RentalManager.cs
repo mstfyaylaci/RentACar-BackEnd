@@ -180,7 +180,7 @@ namespace Business.Concrete
 
         private IResult CheckDeliveryStatus(Rental rental)
         {
-            //Kiralama geçmişte ise
+            //Kiralama geçmişte isee
             if (rental.RentDate <=DateTime.Now && rental.ReturnDate<=DateTime.Now)
             {
                 if (rental.DeliveryStatus==null)

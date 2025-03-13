@@ -97,6 +97,9 @@ namespace WebAPI
 
             app.UseCors("AllowSpecificOrigins"); // bu web sayfası güvenilir
 
+            app.UseStaticFiles();
+
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

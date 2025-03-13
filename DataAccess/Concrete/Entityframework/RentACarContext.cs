@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.Entityframework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-U6VERD3;Database=RentACar;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentACar;Trusted_Connection=true");
         }
 
         //Veri tabanı kolanalrı yazmayı unutma

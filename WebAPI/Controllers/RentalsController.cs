@@ -52,10 +52,10 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("checkifcancarberentednow")]
-        public IActionResult CheckIfCanCarBeRentedBetweenSelectedDates(int carId,  DateTime rentDate, DateTime returnDate)
+        [HttpGet("checkifcancarberentedbetweenselecteddates")]
+        public IActionResult CheckIfCanCarBeRentedBetweenSelectedDates(int carId, DateTime rentDate, DateTime returnDate)
         {
-            var result = _rentalService.CheckIfAnyRentalBetweenSelectedDates(carId,rentDate,returnDate);
+            var result = _rentalService.CheckIfAnyRentalBetweenSelectedDates(carId, rentDate, returnDate);
 
             if (result.Success)
             {
@@ -63,6 +63,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
 
 
         [HttpPost("add")]
