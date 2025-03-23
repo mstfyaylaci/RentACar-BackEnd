@@ -13,6 +13,7 @@ using Entities.DTO;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,16 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         ICarDal _carDal;
+        ICarImageService _carImageService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
+
+
+
 
 
 
@@ -35,15 +41,37 @@ namespace Business.Concrete
 
         //[SecuredOperation("car.add,admin")]
         [ValidationAspect (typeof(CarValidator))] // aspect
-        //[CacheRemoveAspect("ICarService.Get")]
-        public IResult Add(Car car)
+                                                  //[CacheRemoveAspect("ICarService.Get")]
+                                                  //public IResult Add(Car car)
+                                                  //{
+
+        //    _carDal.Add(car);
+        //    return new SuccessResult(Messages.CarAdded);
+
+
+        //}
+
+        //[SecuredOperation("car.add,admin")]
+        [ValidationAspect(typeof(CarValidator))] // aspect
+        //[CacheRemoveAspect("ICarService.Get")]    
+        public IDataResult<int> Add(Car car)
         {
-             
             _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
 
+            if (car.Id > 0) // EF Core, ekleme sonrası ID'yi otomatik set eder
+            {
+                return new SuccessDataResult<int>(car.Id, Messages.CarAdded);
+            }
 
+            return new ErrorDataResult<int>(-1, "Araç eklenirken hata oluştu");
         }
+
+
+
+
+
+
+
 
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICar.Get")]
@@ -56,7 +84,19 @@ namespace Business.Concrete
 
         public IResult Delete(Car car)
         {
+
+            // 1️⃣ Önce aracın veritabanında olup olmadığını kontrol et
+            var carToDelete = _carDal.Get(c => c.Id == car.Id);
+            if (carToDelete == null)
+            {
+                return new ErrorResult("Silmek istediğiniz araç bulunamadı.");
+            }
+
+            _carImageService.DeleteAllImageCarId(car.Id);
+
+            // 4️⃣ Son olarak aracı sil
             _carDal.Delete(car);
+
             return new SuccessResult();
         }
 
@@ -103,7 +143,7 @@ namespace Business.Concrete
 
         public IDataResult<CarDetailDto> GetCarDetailsId(int id)
         {
-           return new SuccessDataResult<CarDetailDto>(_carDal.GetCarDetails(c=>c.CarId==id).SingleOrDefault());
+           return new SuccessDataResult<CarDetailDto>(_carDal.GetCarDetails(c=>c.Id==id).SingleOrDefault());
 
         }
 
@@ -122,6 +162,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c=>c.BrandId==brandId && c.ColorId==colorId));
         }
+
+       
+
+
 
         //İş kuralları 
     }

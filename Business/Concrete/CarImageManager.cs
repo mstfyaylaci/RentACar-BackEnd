@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Business;
 using DataAccess.Concrete.Entityframework;
+using System.IO;
 
 namespace Business.Concrete
 {
@@ -45,9 +46,29 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
+
             _fileHelper.Delete(PathConstants.ImagesPath + carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult();
+        }
+
+        public IResult DeleteAllImageCarId(int carId)
+        {
+            var carImages = _carImageDal.GetAll(c => c.CarId == carId);
+
+            if (carImages == null || !carImages.Any())
+            {
+                return new ErrorResult("No images found for the specified car.");
+            }
+
+            foreach (var image in carImages)
+            {
+
+              Delete(image);
+
+            }
+
+            return new SuccessResult("All images for the specified car have been successfully deleted.");
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -113,6 +134,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(carImage);
         }
 
+       
     }
     
 }
