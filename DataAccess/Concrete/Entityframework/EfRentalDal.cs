@@ -19,22 +19,30 @@ namespace DataAccess.Concrete.Entityframework
             {
                 var result = from r in context.Rentals
                              join ca in context.Cars
-                             on r.CarId equals ca.Id
+                                on r.CarId equals ca.Id
                              join cu in context.Customers
-                             on r.CustomerId equals cu.Id
+                                on r.CustomerId equals cu.Id
                              join u in context.Users
-                             on cu.UserId equals u.Id
+                                on cu.UserId equals u.Id
+                             join b in context.Brands
+                                on ca.BrandId equals b.Id
+                             join p in context.Payments
+                                on r.PaymentId equals p.Id
+
+
                              select new RentalDetailDto
                              {
                                  Id = r.Id,
                                  CarId = r.CarId,
-                                 CarName = ca.CarName,
+                                 CarFullName = $"{b.BrandName} {ca.CarName}",
                                  CustomerId = r.CustomerId,
-                                 CustomerName = u.FirstName + " " + u.LastName,
+                                 CustomerName = $"{u.FirstName} {u.LastName}",
                                  RentalDate = r.RentDate,
                                  ReturnDate = r.ReturnDate,
                                  DailyPrice = ca.DailyPrice,
-                                 DeliveryStatus = r.DeliveryStatus
+                                 DeliveryStatus = r.DeliveryStatus,
+                                 PaymentId = r.PaymentId,
+                                 PaymentDate = p.PaymentDate,
                              };
                 return filter == null
                 ? result.ToList()
@@ -67,7 +75,7 @@ namespace DataAccess.Concrete.Entityframework
                              {
                                  Id = r.Id,
                                  CarId = r.CarId,
-                                 CarName = ca.CarName,
+                                 CarFullName = ca.CarName,
                                  CustomerId = r.CustomerId,
                                  CustomerName = u.FirstName + " " + u.LastName,
                                  RentalDate = r.RentDate,

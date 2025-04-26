@@ -2,6 +2,7 @@
 using Core.Utilities.Result;
 using Core.Utilities.Security.Jwt;
 using Entities.DTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace Business.Abstract
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string email);
         IDataResult<AccessToken> CreateAccessToken(User user);
+
+        IResult ChangePassword(ChangePasswordModel updatedUser);
+
     }
 }

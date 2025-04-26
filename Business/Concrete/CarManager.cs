@@ -38,22 +38,9 @@ namespace Business.Concrete
 
         //--------------------------------------------Post---------------------------------------------------
 
-
-        //[SecuredOperation("car.add,admin")]
-        [ValidationAspect (typeof(CarValidator))] // aspect
-                                                  //[CacheRemoveAspect("ICarService.Get")]
-                                                  //public IResult Add(Car car)
-                                                  //{
-
-        //    _carDal.Add(car);
-        //    return new SuccessResult(Messages.CarAdded);
-
-
-        //}
-
-        //[SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add")]
         [ValidationAspect(typeof(CarValidator))] // aspect
-        //[CacheRemoveAspect("ICarService.Get")]    
+        [CacheRemoveAspect("ICarService.Get")]    
         public IDataResult<int> Add(Car car)
         {
             _carDal.Add(car);

@@ -62,11 +62,50 @@ namespace Business.Constants
 
         public static string ProductNameInvalid = "Ürün ismi geçersiz ";
         public static string MainteneanceTime = "sistem bakımda";
-        
+
         public static string DailyPrice = "arabanın günlük fiyatı 0 dan büyük olmalıdır";
         public static string CarLength = "Arabanın ismi 2 karakterden küçük olamaz";
         public static string IsColorNameNumber = "Renk adı sayı içeremez";
 
-        
+        public static string CreditCardNotFound = "Kredi kartı bulunamadı";
+
+        public static string CreditCardListed = "Kredi kartı listelendi";
+
+        public static string CreditCardNotValid = "Kredi kartı geçersiz";
+
+        public static string StringMustConsistOfNumbersOnly = "Kredi kartı numarası sadece rakamlardan oluşmalıdır";
+
+        public static string CustomersCreditCardsListed = "Müsterinin kredi kartlari listelendi";
+
+        public static string CustomerCreditCardAlreadySaved = "Kredi karti zaten kaydedilmis";
+
+        public static string CustomerCreditCardSaved = "Müsteri kredi karti basariyla kaydedildi";
+        public static string CustomerCreditCardFailedToSave = "Müsteri kredi karti kaydedilemedi";
+
+        public static string CustomerCreditCardNotFound = "Müsteri kredi karti bulunamadi";
+
+        public static string CustomerCreditCardDeleted = "Müsteri kredi karti silindi";
+
+        public static string CustomerCreditCardNotDeleted = "Müsteri kredi karti silinemedi";
+
+        public static string PasswordChanged = "Parola Değiştirildi";
+
+        public static string CreditCardAdded = "Kredi kartı başarıyla eklendi";
+
+        public static string CreditCardDeleted = "Kredi kartı başarıyla silindi";
+
+        public static string InsufficientCardBalance = "Kredi kartı bakiyesi yetersiz";
+
+        public static string PaymentSuccessful = "Ödeme başarılı";
+
+        public static string LeastOneCustomerIdDoesNotMatch = "En az bir müşteri kimliği eşleşmiyor";
+
+        public static string CarAlreadyRentedByTheReservationDate = "Araç, rezervasyon tarihine göre zaten kiralanmış durumda";
+
+        public static string InsufficientFindexScore = "Findex puanı yetersiz";
+
+        public static string TotalAmountNotMatch = "Toplam tutar eşleşmiyor";
+
+        public static string RentalSuccessful = "Kiralama işlemi başarılı";
     }
 }

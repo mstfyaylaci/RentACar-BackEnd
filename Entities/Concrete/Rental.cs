@@ -17,5 +17,7 @@ namespace Entities.Concrete
 
         public DateTime ReturnDate { get; set; }
         public bool? DeliveryStatus { get; set; }
+        public int PaymentId { get; set; }
+
     }
 }

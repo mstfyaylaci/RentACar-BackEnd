@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Result;
 using Entities.Concrete;
 using Entities.DTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,7 @@ namespace Business.Abstract
         IResult Update(Rental rental);
         IResult Delete(Rental rental);
         IResult CarDeliver(int rentalId);
+
+        IDataResult<int> Rent(RentPaymentRequestModel rentPaymentRequest);
     }
 }

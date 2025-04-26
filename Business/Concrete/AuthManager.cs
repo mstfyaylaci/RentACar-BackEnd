@@ -1,10 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validaton;
 using Core.Entities.Concrete;
 using Core.Utilities.Result;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using Entities.DTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,5 +75,30 @@ namespace Business.Concrete
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
+
+
+        [ValidationAspect(typeof(ChangePasswordValidator))]
+        public IResult ChangePassword(ChangePasswordModel updatedUser)
+        {
+            UserForLoginDto checkedUser = new UserForLoginDto
+            {
+                Email = updatedUser.Email,
+                Password = updatedUser.OldPassword
+            };
+            var loginResult = Login(checkedUser);
+            if (loginResult.Success)
+            {
+                var user = loginResult.Data;
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(updatedUser.NewPassword, out passwordHash, out passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+                _userService.Update(user);
+                return new SuccessResult(Messages.PasswordChanged);
+            }
+
+            return new ErrorResult(loginResult.Message);
+        }
+
     }
 }

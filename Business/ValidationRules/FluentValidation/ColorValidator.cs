@@ -14,7 +14,9 @@ namespace Business.ValidationRules.FluentValidation
         public ColorValidator()
         {
             RuleFor(c => c.ColorName).NotEmpty();
+            RuleFor(c => c.ColorName).NotNull();
             RuleFor(c => c.ColorName).MinimumLength(2);
+            RuleFor(c => c.ColorName).MaximumLength(50);
             RuleFor(c => c.ColorName).Must(IsNumber).WithMessage(Messages.IsColorNameNumber);
         }
 

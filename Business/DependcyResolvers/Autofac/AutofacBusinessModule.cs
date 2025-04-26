@@ -49,6 +49,19 @@ namespace Business.DependcyResolvers.Autofac
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();// tek bir referans oluştur herkese onu ver
             builder.RegisterType<EfCarImage>().As<ICarImageDal>().SingleInstance();
 
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
+            builder.RegisterType<EfCreditDal>().As<ICreditCardDal>().SingleInstance();
+
+            
+
+            builder.RegisterType<CustomerCreditCardManager>().As<ICustomerCreditCardService>().SingleInstance();
+            builder.RegisterType<EfCustomerCreditCard>().As<ICustomerCreditCardDal>().SingleInstance();
+
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+            builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+
+            builder.RegisterType<FindexScoreManager>().As<IFindexScoreService>().SingleInstance();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
