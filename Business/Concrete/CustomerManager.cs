@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Castle.Core.Resource;
 using Core.Aspects.Autofac.Validaton;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
@@ -44,6 +45,17 @@ namespace Business.Concrete
         public IDataResult<Customer> GetById(int id)
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id),Messages.CustomerByListed);
+        }
+
+        public IDataResult<Customer> GetCustomerByUserId(int userId)
+        {
+            var result = _customerDal.Get(c => c.UserId == userId);
+            if (result != null)
+            {
+                return new SuccessDataResult<Customer>(result, Messages.CustomerListed);
+            }
+
+            return new ErrorDataResult<Customer>(null, Messages.CustomerNotExist);
         }
 
         public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()

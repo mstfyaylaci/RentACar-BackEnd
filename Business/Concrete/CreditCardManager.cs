@@ -101,11 +101,12 @@ namespace Business.Concrete
 
         private CreditCard GetCreditCardByCardInfo(string cardNumber, string expireYear, string expireMonth, string cvc, string cardHolderFullName)
         {
-            return _creditCardDal.Get(c => c.CardNumber == cardNumber &&
-                                           c.ExpireYear == expireYear &&
-                                           c.ExpireMonth == expireMonth &&
-                                           c.Cvc == cvc &&
-                                           c.CardHolderFullName == cardHolderFullName.ToUpperInvariant());
+            return _creditCardDal.GetAll(c =>
+            c.CardNumber == cardNumber &&
+            c.ExpireYear == expireYear &&
+            c.ExpireMonth == expireMonth &&
+            c.Cvc == cvc)
+                .FirstOrDefault(c => c.CardHolderFullName.ToUpperInvariant() == cardHolderFullName.ToUpperInvariant());
         }
     }
 }

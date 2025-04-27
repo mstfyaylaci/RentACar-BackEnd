@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
 using Entities.Concrete;
+using Entities.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,16 +54,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("update")]
-        public IActionResult Update(User user)
+        public IActionResult Update(UserDto user)
         {
-            var result = _userService.Update(user);
-
+            var result = _userService.UpdateByDto(user);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+    }
 
         [HttpPost("delete")]
         public IActionResult Delete(User user)

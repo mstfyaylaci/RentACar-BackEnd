@@ -144,7 +144,7 @@ namespace Business.Concrete
         [TransactionScopeAspect]
         public IDataResult<int> Rent(RentPaymentRequestModel rentPaymentRequest)
         {
-            var customerFindexScore = _findexScoreService.GetCustomerFindexScore(rentPaymentRequest.CustomerId);
+                var customerFindexScore = _findexScoreService.GetCustomerFindexScore(rentPaymentRequest.CustomerId);
 
             if (!customerFindexScore.Success)
             {
@@ -156,7 +156,7 @@ namespace Business.Concrete
                 rentPaymentRequest.ExpireYear, 
                 rentPaymentRequest.ExpireMonth, 
                 rentPaymentRequest.Cvc, 
-                rentPaymentRequest.CardHolderFullName.ToUpper());
+                rentPaymentRequest.CardHolderFullName.ToUpperInvariant());
 
             List<Rental> verifiedRentals = new List<Rental>();
             decimal totalAmount = 0;

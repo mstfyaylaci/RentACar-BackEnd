@@ -107,5 +107,11 @@ namespace Business.Constants
         public static string TotalAmountNotMatch = "Toplam tutar eşleşmiyor";
 
         public static string RentalSuccessful = "Kiralama işlemi başarılı";
+
+        public static string CustomerNotExist = "Müşteri mevcut değil";
+
+        public static string UserEmailExist = "kullanıcı maili mevcut";
+
+        public static string UserEmailNotAvailable = "kullanıcı maili yok";
     }
 }
