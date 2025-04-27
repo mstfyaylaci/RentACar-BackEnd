@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using Core.Utilities.Business;
 using DataAccess.Concrete.Entityframework;
 using System.IO;
+using Business.BusinessAspect.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validaton;
 
 namespace Business.Concrete
 {
@@ -26,6 +30,41 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
         }
+
+        [SecuredOperation("admin,carimage.all,carimage.list")]
+        [CacheAspect(10)]
+        public IDataResult<List<CarImage>> GetAll()
+        {
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+        }
+
+        [SecuredOperation("admin,carimage.all,carimage.list")]
+        [CacheAspect(10)]
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        {
+            IResult result = BusinessRules.Run(CheckIfCarImage(carId));
+
+            if (result != null)
+            {
+                return new ErrorDataResult<List<CarImage>>(GetCarImageDefault(carId).Data);
+            }
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+        }
+
+
+        [SecuredOperation("admin,carimage.all,carimage.list")]
+        [CacheAspect(10)]
+        public IDataResult<CarImage> GetById(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
+        }
+
+
+
+        [SecuredOperation("admin,carimage.all,carimage.add")]
+        [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
+        [CacheRemoveAspect("ICarService.Get")]
 
         public IResult Add(CarImage carImage, IFormFile file)
         {
@@ -42,8 +81,10 @@ namespace Business.Concrete
             return new SuccessResult("Resim başarıyla yüklendi");
         }
 
-       
 
+        [SecuredOperation("admin,carimage.all,carimage.delete")]
+        [CacheRemoveAspect("ICarImageService.Get")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(CarImage carImage)
         {
 
@@ -52,6 +93,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("admin,carimage.all,carimage.delete")]
+        [CacheRemoveAspect("ICarImageService.Get")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult DeleteAllImageCarId(int carId)
         {
             var carImages = _carImageDal.GetAll(c => c.CarId == carId);
@@ -71,27 +115,11 @@ namespace Business.Concrete
             return new SuccessResult("All images for the specified car have been successfully deleted.");
         }
 
-        public IDataResult<List<CarImage>> GetAll()
-        {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
-        }
 
-        public IDataResult<List<CarImage>> GetByCarId(int carId)
-        {
-            IResult result = BusinessRules.Run(CheckIfCarImage(carId));
-
-            if (result!=null)
-            {
-                return new ErrorDataResult<List<CarImage>>(GetCarImageDefault(carId).Data);
-            }
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
-        }
-
-        public IDataResult<CarImage> GetById(int id)
-        {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c=>c.Id==id));
-        }
-
+        [SecuredOperation("admin,carimage.all,carimage.update")]
+        [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(CarImage carImage, IFormFile file)
         {
             carImage.ImagePath = _fileHelper.Update(file, PathConstants.ImagesPath + carImage.ImagePath, PathConstants.ImagesPath);

@@ -23,6 +23,7 @@ namespace Business.Concrete
             _creditCardService = creditCardService;
         }
 
+        //[SecuredOperation("admin,payment.all,payment.pay,customer")]
         [TransactionScopeAspect]
         public IDataResult<int> Pay(CreditCard creditCard, int customerId, decimal amount)
         {

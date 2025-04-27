@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validaton;
 using Core.Utilities.Business;
@@ -37,13 +39,16 @@ namespace Business.Concrete
 
 
 
+        [SecuredOperation("admin,rental.all,rental.list")]
+        [CacheAspect(10)]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
         }
 
-        
 
+        [SecuredOperation("admin,rental.all,rental.list")]
+        [CacheAspect(10)]
         public IDataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.RentalByListed);
@@ -51,12 +56,15 @@ namespace Business.Concrete
 
 
         //-----------------------------RentalDetailDto---------------------------------------
+        [SecuredOperation("admin,rental.all,rental.list")]
+        [CacheAspect(10)]
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.RentalListed);
         }
 
-
+        [SecuredOperation("admin,rental.all,rental.list")]
+        [CacheAspect(10)]
         public IDataResult<RentalDetailDto> GetByCarIdRentalDetails(int carId)
         {
             return new SuccessDataResult<RentalDetailDto>(_rentalDal.GetRentalDetails(c => c.CarId == carId).FirstOrDefault());
@@ -92,7 +100,9 @@ namespace Business.Concrete
 
         //-----------------------Add,Update,Delete ----------------------------
 
+        [SecuredOperation("admin,rental.all,rental.add")]
         [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
         {
             IResult rulesResult;
@@ -118,8 +128,9 @@ namespace Business.Concrete
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
- 
 
+        [SecuredOperation("admin,rental.all,rental.delete")]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
@@ -127,7 +138,9 @@ namespace Business.Concrete
         }
 
 
+        [SecuredOperation("admin,rental.all,rental.add")]
         [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
@@ -140,6 +153,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarIsDelivered);
         }
 
+        [SecuredOperation("admin,rental.all,rental.rent,customer")]
         [ValidationAspect(typeof(RentPaymentRequestValidator))]
         [TransactionScopeAspect]
         public IDataResult<int> Rent(RentPaymentRequestModel rentPaymentRequest)

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Business.ValidationRules.FluentValidation.UserValidator;
 
 namespace Business.Concrete
 {
@@ -26,23 +27,10 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Add(User user)
-        {
-            _userDal.Add(user);
-
-            return new SuccessResult();
-        }
-
-        public IResult Delete(User user)
-        {
-            _userDal.Delete(user);
-            return new SuccessResult(Messages.UserDeleted);
-        }
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(),Messages.UserListed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UserListed);
         }
 
         public IDataResult<List<UserDto>> GetAllDto()
@@ -60,7 +48,7 @@ namespace Business.Concrete
             return _userDal.Get(u => u.Email == email);
         }
 
-
+        [ValidationAspect(typeof(UserDtoValidator))]
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);
@@ -77,12 +65,29 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(UserValidator))]
+        public IResult Add(User user)
+        {
+            _userDal.Add(user);
+
+            return new SuccessResult();
+        }
+
+        public IResult Delete(User user)
+        {
+            _userDal.Delete(user);
+            return new SuccessResult(Messages.UserDeleted);
+        }
+
+        
+
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        [ValidationAspect(typeof(UserDtoValidator))]
         public IResult UpdateByDto(UserDto userDto)
         {
             var rulesResult = BusinessRules.Run(CheckIfUserIdExist(userDto.Id)

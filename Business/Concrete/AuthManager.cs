@@ -27,6 +27,8 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
+
+        [ValidationAspect(typeof(UserForRegisterDtoValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -44,6 +46,9 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
+
+
+        [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
