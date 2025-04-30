@@ -14,7 +14,11 @@ namespace DataAccess.Concrete.Entityframework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentACar;Trusted_Connection=true");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentACar;Trusted_Connection=true");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("Host=nozomi.proxy.rlwy.net;Port=43635;Database=railway;Username=postgres;Password=VbpxAijnjNwRKRmtLLwknDjDwifiwkyc;SSL Mode=Require;Trust Server Certificate=true;");
+            }
         }
 
         //Veri tabanı kolanalrı yazmayı unutma
