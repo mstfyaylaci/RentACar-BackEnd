@@ -2,11 +2,13 @@
 using Core.Entitites.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace DataAccess.Concrete.Entityframework
 {
@@ -17,7 +19,14 @@ namespace DataAccess.Concrete.Entityframework
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentACar;Trusted_Connection=true");
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=nozomi.proxy.rlwy.net;Port=43635;Database=railway;Username=postgres;Password=VbpxAijnjNwRKRmtLLwknDjDwifiwkyc;SSL Mode=Require;Trust Server Certificate=true;");
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                var connectionString = configuration.GetConnectionString("PostgreConnection");
+
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 
