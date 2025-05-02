@@ -3,7 +3,7 @@
 Bu proje, bir araç kiralama sisteminin (Rent A Car) uçtan uca tüm ihtiyaçlarını karşılamayı hedefleyen bir **.NET 6 Web API** Backend uygulamasıdır. 
 ## Frontend Projesi
 
-Frontend kısmı için geliştirilmiş olan proje, [RentACar Frontend](https://github.com/mstfyaylaci/RentACar-FrontEnd)
+Angular ile Frontend kısmı için geliştirilmiş olan proje, [RentACar Frontend](https://github.com/mstfyaylaci/RentACar-FrontEnd)
 ## Backend Projesi;
 
 - Marka, araç, renk ve araç görsellerinin yönetimi,
