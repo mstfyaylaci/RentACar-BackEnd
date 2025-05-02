@@ -93,6 +93,55 @@ Web API'yi çalıştırdıktan sonra şu şekilde HTTP istekleri yapabilirsiniz:
    ```sh
    https://localhost:44372/api/colors/getall
    ```
+## 🛠️ Kullanılan Teknolojiler ve Mimariler
+
+Bu projede modern ve ölçeklenebilir bir mimari oluşturmak adına aşağıdaki teknoloji ve yazılım geliştirme yaklaşımları kullanılmıştır:
+
+### ✅ Entity Framework Core
+
+- Veritabanı işlemleri için ORM aracı olarak **Entity Framework Core** kullanılmıştır.
+- `Code First` yaklaşımı benimsenmiş ve veritabanı tabloları doğrudan C# sınıfları üzerinden oluşturulmuştur.
+
+### ✅ Generic Repository Deseni
+
+- **Tekrar kullanılabilirlik** ve **modülerlik** amacıyla `IEntityRepository<T>` arayüzü ile generic repository altyapısı kurulmuştur.
+- Bu yapı sayesinde her entity için ayrı ayrı CRUD işlemleri yazmak yerine, ortak bir yapı üzerinden işlemler yapılabilmektedir.
+
+### ✅ LINQ ve Expression Kullanımı
+-Repository metotlarında LINQ tabanlı sorgular yapılabilmesi için Expression<Func<T, bool>> parametreleri kullanılmıştır.
+-Bu sayede esnek ve okunabilir sorgular elde edilmiştir.
+### ✅ DTO (Data Transfer Object)
+-Katmanlar arası veri taşırken yalnızca ihtiyaç duyulan alanların transfer edilmesi için DTO yapısı tercih edilmiştir.
+-Bu sayede veri güvenliği sağlanmış ve performans artışı elde edilmiştir.
+### ✅ IResult ve IDataResult Yapıları
+Projede işlem sonuçlarını standartlaştırmak amacıyla `IResult`, `IDataResult`, `SuccessResult`, `ErrorResult`, `SuccessDataResult`, `ErrorDataResult` gibi özel yapılar kullanılmıştır. Bu sayede servis katmanında hem işlem sonucu (başarı/başarısızlık) hem de kullanıcıya gösterilecek mesajlar ve veriler sistematik şekilde yönetilmiştir.
+### ✅ Aspect Oriented Programming (AOP)
+Projede **Autofac** altyapısı kullanılarak Aspect Oriented Programming uygulanmıştır. Böylece iş mantığından bağımsız olarak çalışan bazı işlemler katmanlar arası ayrıştırılmıştır.
+Kullanılan Aspect'ler:
+- **Caching**: Sık kullanılan verilerin bellekte saklanması ile performans artışı sağlanmıştır.
+- **Performance**: Yavaş çalışan metotların izlenebilmesi amacıyla performans ölçümleri yapılmıştır.
+- **Transaction**: Veritabanı işlemlerinde bütünlük sağlamak için işlemler bir bütün olarak ele alınmıştır.
+- **Validation**: FluentValidation kütüphanesi ile gelen veriler kontrol altına alınmıştır.
+### ✅ Cross Cutting Concerns
+Loglama, doğrulama, cache’leme, hata yönetimi gibi uygulamanın genelini ilgilendiren işlemler Cross Cutting Concern olarak ayrılmış ve aspect yapısı ile yönetilmiştir. Bu sayede ana iş mantığı sade ve sürdürülebilir kalmıştır.
+### 🔒 Güvenlik ve Kimlik Doğrulama
+Projede kullanıcı doğrulama ve yetkilendirme işlemleri için aşağıdaki güvenlik yöntemleri uygulanmıştır:
+- **JWT (JSON Web Token)**: Kullanıcı girişlerinde kimlik doğrulama amacıyla JWT token yapısı kullanılmıştır. Giriş yapan kullanıcıya token üretilir ve yetkili işlemler bu token ile gerçekleştirilir.
+- **Hashing ve Salting**: Şifreler veri tabanına doğrudan kaydedilmez. Bunun yerine hashing + salting yöntemi ile güvenli bir şekilde şifrelenir.
+- **Encryption**: Kredi kartı gibi hassas bilgiler sistem içerisinde şifrelenerek saklanır ve güvenli bir aktarım sağlanır.
+- **Role-Based Authorization (RBAC)**: Kullanıcıların sistemdeki rolleri (admin, user vb.) dikkate alınarak belirli işlemlere erişim izinleri kontrol edilmiştir.
+### ✅ Yardımcı Sınıflar (Helpers)
+Projede sık kullanılan bazı işlemler için yardımcı sınıflar (helper) oluşturulmuştur. Böylece tekrar eden kodlar minimize edilip yeniden kullanılabilir hale getirilmiştir.
+- **FileHelper**: Dosya yükleme, güncelleme ve silme işlemlerini yönetir. Özellikle araç görselleri gibi dosya işlemlerinde aktif olarak kullanılır.
+- **GuidHelper**: Benzersiz dosya adları veya veriler üretmek için `GUID` temelli yardımcı metotlar içerir.
+### ⚠️ Hata Yönetimi (Error Handling)
+Projede uygulama hatalarını yönetmek için özel bir **Exception Middleware** yapısı kullanılmıştır. Bu sayede merkezi bir hata yönetimi sağlanmış ve kullanıcı dostu hata mesajları sunulmuştur.
+- **ErrorDetails**: Hata mesajlarını ve detaylarını düzgün bir formatta tutmak için kullanılan sınıftır. Herhangi bir hata oluştuğunda bu sınıf ile hata detayları kullanıcıya iletilir.  
+- **ExceptionMiddleware**: Tüm uygulama hatalarını yakalamak ve yönetmek için kullanılan middleware yapısıdır. Uygulama seviyesindeki tüm hatalar burada merkezi olarak işlenir ve uygun hata mesajı döndürülür.
+- **ExceptionMiddlewareExtensions**: `ExceptionMiddleware`'i uygulama pipeline'ına dahil etmek için kullanılan extension metodudur. Bu yapı, uygulamanın her katmanında hata yönetiminin tutarlı olmasını sağlar.
+### 🏢 İş Kuralları (Business Rules)
+Projede iş kurallarını yönetmek için **Business Rules** yapısı kullanılmıştır. Bu yapı, belirli iş mantığı kurallarının kontrol edilmesi ve uygulanmasını sağlar. İşlem sırasında birden fazla kural çalıştırılabilir ve sonuçlar merkezi bir şekilde yönetilebilir. 
+Bu sayede, uygulamanın iş mantığı merkezi bir noktada yönetilir ve kuralların kontrolü daha düzenli bir şekilde yapılır.
 
 ## Tech Stack
 | Technology / Library | Version |
