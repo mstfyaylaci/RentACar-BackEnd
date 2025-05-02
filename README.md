@@ -1,6 +1,10 @@
 # 🚗 Rent A Car Web API (.NET 6)
 
-Bu proje, bir araç kiralama sisteminin (Rent A Car) uçtan uca tüm ihtiyaçlarını karşılamayı hedefleyen bir **.NET 6 Web API** uygulamasıdır. Proje kapsamında;
+Bu proje, bir araç kiralama sisteminin (Rent A Car) uçtan uca tüm ihtiyaçlarını karşılamayı hedefleyen bir **.NET 6 Web API** Backend uygulamasıdır. 
+## Frontend Projesi
+
+Frontend kısmı için geliştirilmiş olan proje, [RentACar Frontend](https://github.com/mstfyaylaci/RentACar-FrontEnd)
+## Backend Projesi;
 
 - Marka, araç, renk ve araç görsellerinin yönetimi,
 - Kullanıcı ve müşteri işlemleri,
@@ -143,6 +147,10 @@ Projede uygulama hatalarını yönetmek için özel bir **Exception Middleware**
 Projede iş kurallarını yönetmek için **Business Rules** yapısı kullanılmıştır. Bu yapı, belirli iş mantığı kurallarının kontrol edilmesi ve uygulanmasını sağlar. İşlem sırasında birden fazla kural çalıştırılabilir ve sonuçlar merkezi bir şekilde yönetilebilir. 
 Bu sayede, uygulamanın iş mantığı merkezi bir noktada yönetilir ve kuralların kontrolü daha düzenli bir şekilde yapılır.
 
+
+## Contributions
+
+Thanks to dear [Engin Demiroğ](https://github.com/engindemirog) for his contributions.
 ## Tech Stack
 | Technology / Library | Version |
 | ------------- | ------------- |
